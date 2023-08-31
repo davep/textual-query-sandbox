@@ -14,6 +14,6 @@ $ pipx install textual-query-sandbox
 
 Then run `tqs`. That's it!
 
-![Textual Query Sandbox](./tqs.png)
+![Textual Query Sandbox](https://raw.githubusercontent.com/davep/textual-query-sandbox/main/tqs.png)
 
 [//]: # (README.md ends here)
