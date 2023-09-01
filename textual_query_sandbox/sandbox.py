@@ -8,6 +8,18 @@ from textual.containers import Horizontal, Vertical
 from textual.widget import Widget
 from textual.widgets import Button, Input, Pretty
 
+class Playground(Vertical, inherit_css=False):
+    """The playground container."""
+
+    BORDER_TITLE = "Playground"
+
+    DEFAULT_CSS = """
+    Playground {
+        border: panel cornflowerblue;
+        height: 2fr;
+    }
+    """
+
 class QuerySandboxApp(App[None]):
     """A Textual CSS query sandbox application."""
 
@@ -20,12 +32,7 @@ class QuerySandboxApp(App[None]):
         height: 4;
     }
 
-    #playground {
-        border: panel cornflowerblue;
-        height: 2fr;
-    }
-
-    #playground Vertical, #playground Horizontal {
+    Playground * {
         margin: 1;
         border: panel red 40%;
     }
@@ -69,7 +76,7 @@ class QuerySandboxApp(App[None]):
         with Horizontal(id="input"):
             yield Input()
             yield Button("Query")
-        with self.t(Vertical(id="playground"), "Playground"):
+        with Playground():
             with self.t(Vertical(id="one", classes="foo bar")):
                 with self.t(Vertical(id="two")):
                     with self.t(Horizontal(id="three", classes="baz")):
@@ -83,9 +90,9 @@ class QuerySandboxApp(App[None]):
     @on(Button.Pressed)
     def do_query(self) -> None:
         """Perform the query and show the result."""
-        self.query("#playground *").remove_class("hit")
+        self.query("Playground *").remove_class("hit")
         try:
-            hits = self.query_one("#playground", Vertical).query(
+            hits = self.query_one(Playground).query(
                 self.query_one(Input).value
             )
             hits.add_class("hit")
