@@ -2,8 +2,10 @@
 
 from .sandbox import QuerySandboxApp
 
+
 def run() -> None:
     QuerySandboxApp().run()
+
 
 if __name__ == "__main__":
     run()
