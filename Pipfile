@@ -11,6 +11,8 @@ twine = "*"
 pylint = "*"
 mypy = "*"
 build = "*"
+pre-commit = "*"
+black = "*"
 
 [requires]
 python_version = "3.7"
