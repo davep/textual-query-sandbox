@@ -8,6 +8,7 @@ from textual.containers import Horizontal, Vertical
 from textual.widget import Widget
 from textual.widgets import Button, Input, Pretty
 
+
 class Playground(Vertical, inherit_css=False):
     """The playground container."""
 
@@ -19,6 +20,7 @@ class Playground(Vertical, inherit_css=False):
         height: 2fr;
     }
     """
+
 
 class QuerySandboxApp(App[None]):
     """A Textual CSS query sandbox application."""
@@ -81,7 +83,9 @@ class QuerySandboxApp(App[None]):
                 with self.t(Vertical(id="two")):
                     with self.t(Horizontal(id="three", classes="baz")):
                         for n in range(3):
-                            yield self.t(Vertical(id=f"three-{n}", classes=f"wibble wobble-{n}"))
+                            yield self.t(
+                                Vertical(id=f"three-{n}", classes=f"wibble wobble-{n}")
+                            )
                     with self.t(Vertical(id="four")):
                         yield self.t(Vertical(id="innermost", classes="foo baz"))
         yield self.t(Pretty([]), "Query Results")
@@ -92,14 +96,13 @@ class QuerySandboxApp(App[None]):
         """Perform the query and show the result."""
         self.query("Playground *").remove_class("hit")
         try:
-            hits = self.query_one(Playground).query(
-                self.query_one(Input).value
-            )
+            hits = self.query_one(Playground).query(self.query_one(Input).value)
             hits.add_class("hit")
             result = list(hits)
-        except Exception as error: # pylint:disable=broad-exception-caught
+        except Exception as error:  # pylint:disable=broad-exception-caught
             result = error
         self.query_one(Pretty).update(result)
         self.query_one(Input).focus()
+
 
 ### sandbox.py ends here
