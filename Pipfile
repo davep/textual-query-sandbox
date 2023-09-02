@@ -10,6 +10,7 @@ textual = "*"
 twine = "*"
 pylint = "*"
 mypy = "*"
+build = "*"
 
 [requires]
 python_version = "3.7"
