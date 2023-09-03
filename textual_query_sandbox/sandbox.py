@@ -1,4 +1,4 @@
-"""A simple textual CSS query sandbox."""
+"""A simple textual DOM query sandbox."""
 
 from __future__ import annotations
 
