@@ -4,9 +4,9 @@ from __future__ import annotations
 
 from textual import on
 from textual.app import App, ComposeResult
-from textual.containers import Horizontal, Vertical
+from textual.containers import Horizontal, Vertical, VerticalScroll
 from textual.widget import Widget
-from textual.widgets import Button, Input, Pretty
+from textual.widgets import Button, Input, Pretty, Static
 
 
 class Playground(Vertical, inherit_css=False):
@@ -65,11 +65,23 @@ class QuerySandboxApp(App[None]):
         background: green 10%;
     }
 
-    Pretty {
+    VerticalScroll {
         margin-top: 1;
         height: 1fr;
-        border: panel cornflowerblue;
+        border: panel cornflowerblue 60%;
         padding: 1;
+    }
+
+    VerticalScroll:focus {
+        border: panel cornflowerblue;
+    }
+
+    #results {
+        width: 3fr;
+    }
+
+    #tree {
+        width: 2fr;
     }
     """
 
@@ -88,7 +100,14 @@ class QuerySandboxApp(App[None]):
                             )
                     with title(Vertical(id="four")):
                         yield title(Vertical(id="innermost", classes="foo baz"))
-        yield title(Pretty([]), "Query Results")
+        with Horizontal():
+            with title(VerticalScroll(id="results"), "Query Results"):
+                yield Pretty([])
+            with title(VerticalScroll(id="tree"), "Playground DOM Tree"):
+                yield Static("")
+
+    def on_mount(self) -> None:
+        self.query_one("#tree > Static", Static).update(self.query_one(Playground).tree)
 
     @on(Input.Submitted)
     @on(Button.Pressed)
@@ -102,7 +121,7 @@ class QuerySandboxApp(App[None]):
             result = list(hits)
         except Exception as error:  # pylint:disable=broad-exception-caught
             result = error
-        self.query_one(Pretty).update(result)
+        self.query_one("#results > Pretty", Pretty).update(result)
         self.query_one(Input).focus()
 
 
