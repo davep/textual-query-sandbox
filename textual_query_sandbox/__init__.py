@@ -10,8 +10,4 @@ __email__ = "davep@davep.org"
 __version__ = "0.2.0"
 __licence__ = "GPLv3+"
 
-##############################################################################
-# Export the imports.
-__all__ = []
-
 ### __init__.py ends here
