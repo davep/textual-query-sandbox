@@ -95,6 +95,7 @@ class QuerySandboxApp(App[None]):
     def do_query(self) -> None:
         """Perform the query and show the result."""
         self.query("Playground *").remove_class("hit")
+        result: list[Widget] | Exception
         try:
             hits = self.query_one(Playground).query(self.query_one(Input).value)
             hits.add_class("hit")
