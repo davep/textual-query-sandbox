@@ -4,6 +4,7 @@ from .sandbox import QuerySandboxApp
 
 
 def run() -> None:
+    """Run the application."""
     QuerySandboxApp().run()
 
 
