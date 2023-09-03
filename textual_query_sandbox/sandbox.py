@@ -22,6 +22,27 @@ class Playground(Vertical, inherit_css=False):
     """
 
 
+def title(widget: Widget, main_title: str | None = None) -> Widget:
+    """Add a title to a widget.
+
+    Args:
+        widget: The widget to name.
+        main_title: The optional title to give the widget.
+
+    Returns:
+        The widget.
+    """
+    border_title = main_title
+    if main_title is None:
+        border_title = widget.__class__.__name__
+        if widget.id is not None:
+            border_title = f"{border_title}#{widget.id}"
+        if widget.classes:
+            border_title = f"{border_title}.{'.'.join(widget.classes)}"
+    widget.border_title = border_title
+    return widget
+
+
 class QuerySandboxApp(App[None]):
     """A Textual CSS query sandbox application."""
 
@@ -52,43 +73,22 @@ class QuerySandboxApp(App[None]):
     }
     """
 
-    @staticmethod
-    def t(widget: Widget, title: str | None = None) -> Widget:
-        """Add a title to a widget.
-
-        Args:
-            widget: The widget to name.
-            title: The optional title to give the widget.
-
-        Returns:
-            The widget.
-        """
-        border_title = title
-        if title is None:
-            border_title = widget.__class__.__name__
-            if widget.id is not None:
-                border_title = f"{border_title}#{widget.id}"
-            if widget.classes:
-                border_title = f"{border_title}.{'.'.join(widget.classes)}"
-        widget.border_title = border_title
-        return widget
-
     def compose(self) -> ComposeResult:
         """Compose the DOM for the application."""
         with Horizontal(id="input"):
             yield Input()
             yield Button("Query")
         with Playground():
-            with self.t(Vertical(id="one", classes="foo bar")):
-                with self.t(Vertical(id="two")):
-                    with self.t(Horizontal(id="three", classes="baz")):
+            with title(Vertical(id="one", classes="foo bar")):
+                with title(Vertical(id="two")):
+                    with title(Horizontal(id="three", classes="baz")):
                         for n in range(3):
-                            yield self.t(
+                            yield title(
                                 Vertical(id=f"three-{n}", classes=f"wibble wobble-{n}")
                             )
-                    with self.t(Vertical(id="four")):
-                        yield self.t(Vertical(id="innermost", classes="foo baz"))
-        yield self.t(Pretty([]), "Query Results")
+                    with title(Vertical(id="four")):
+                        yield title(Vertical(id="innermost", classes="foo baz"))
+        yield title(Pretty([]), "Query Results")
 
     @on(Input.Submitted)
     @on(Button.Pressed)
