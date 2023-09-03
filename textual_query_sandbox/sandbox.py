@@ -61,7 +61,7 @@ class QuerySandboxApp(App[None]):
     }
 
     .hit {
-        border: panel green !important;
+        border: panel green;
         background: green 10%;
     }
 
