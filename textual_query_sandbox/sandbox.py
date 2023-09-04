@@ -190,9 +190,7 @@ class QuerySandboxApp(App[None]):
         self.query("Playground *").remove_class("hit")
         result: list[Widget] | Exception
         try:
-            hits = self.playground.query(self.input.value)
-            hits.add_class("hit")
-            result = list(hits)
+            result = list(self.playground.query(self.input.value).add_class("hit"))
         except Exception as error:  # pylint:disable=broad-exception-caught
             result = error
         self.query_one("#results > Pretty", Pretty).update(result)
