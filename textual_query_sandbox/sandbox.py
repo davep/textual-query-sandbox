@@ -155,11 +155,13 @@ class QuerySandboxApp(App[None]):
     Playground * {
         margin: 1;
         border: panel red 40%;
+        border-title-color: $text 50%;
     }
 
     Playground .hit {
         border: panel green;
         background: green 10%;
+        border-title-color: $boost;
     }
 
     VerticalScroll {
