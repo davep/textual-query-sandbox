@@ -74,7 +74,7 @@ class VariousWidgets(Playground):
     """A playground made of some widgets."""
 
     DEFAULT_CSS = """
-    VariousWidgets Label{
+    VariousWidgets Label {
         width: 1fr;
     }
     """
@@ -140,6 +140,10 @@ class QuerySandboxApp(App[None]):
     """A Textual CSS query sandbox application."""
 
     CSS = """
+    Static {
+        color: $text-muted;
+    }
+
     Input {
         width: 1fr;
     }
