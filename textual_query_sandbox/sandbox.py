@@ -7,7 +7,7 @@ from itertools import cycle
 from textual import on
 from textual.app import App, ComposeResult
 from textual.binding import Binding
-from textual.containers import Horizontal, Vertical, VerticalScroll
+from textual.containers import Grid, Horizontal, Vertical, VerticalScroll
 from textual.message import Message
 from textual.widget import Widget
 from textual.widgets import Button, Input, Pretty, Static, TabbedContent, TabPane, Label
@@ -106,6 +106,36 @@ class VariousWidgets(Playground):
                     )
 
 
+class IDAndClassGrid(Playground):
+    """A playground of ID and class combinations."""
+
+    DEFAULT_CSS = """
+    IDAndClassGrid Grid {
+        grid-size: 3 3;
+    }
+
+    IDAndClassGrid Static {
+        height: 100%;
+        content-align: center middle;
+    }
+    """
+
+    def compose(self) -> ComposeResult:
+        """Compose the child widgets."""
+        two_cycle = cycle(("even", "odd"))
+        three_cycle = cycle(("yes", "no", "maybe"))
+        six_cycle = cycle(("up", "down", "strange", "charm", "bottom", "top"))
+        with title(Grid()):
+            for n in range(9):
+                yield title(
+                    Static(
+                        str(n),
+                        id=f"cell-{n}",
+                        classes=f"{next(two_cycle)} {next(three_cycle)} {next(six_cycle)}",
+                    )
+                )
+
+
 class QuerySandboxApp(App[None]):
     """A Textual CSS query sandbox application."""
 
@@ -157,8 +187,9 @@ class QuerySandboxApp(App[None]):
     """
 
     BINDINGS = [
-        Binding("f1", "playground('tab-1')", "Nested Containers"),
-        Binding("f2", "playground('tab-2')", "Various Widgets"),
+        Binding("f1", "playground('tab-1')"),
+        Binding("f2", "playground('tab-2')"),
+        Binding("f3", "playground('tab-3')"),
     ]
 
     def compose(self) -> ComposeResult:
@@ -171,6 +202,8 @@ class QuerySandboxApp(App[None]):
                 yield NestedContainers()
             with TabPane("Various Widgets (F2)"):
                 yield VariousWidgets()
+            with TabPane("IDs and Classes (F3)"):
+                yield IDAndClassGrid()
         with Horizontal(id="output"):
             with title(VerticalScroll(id="results"), "Query Results"):
                 yield Pretty([])
