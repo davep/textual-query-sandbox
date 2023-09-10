@@ -25,6 +25,13 @@ class Playground(Vertical, inherit_css=False):
     }
     """
 
+    def on_mount(self) -> None:
+        """Set up the playground once the DOM is mounted."""
+        # There's little point in anything in the playground getting focus,
+        # so remove that ability from everything in here.
+        for child in self.query("*"):
+            child.can_focus = False
+
 
 def title(widget: Widget, main_title: str | None = None) -> Widget:
     """Add a title to a widget.
