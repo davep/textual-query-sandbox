@@ -10,7 +10,7 @@ twine  := $(run) twine
 black  := $(run) black
 
 ##############################################################################
-# Run the plotter.
+# Run the application.
 .PHONY: run
 run:
 	$(python) -m $(lib)
