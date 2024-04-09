@@ -15,5 +15,4 @@ pre-commit = "*"
 black = "*"
 
 [requires]
-python_version = "3.7"
-python_full_version = "3.7.16"
+python_version = "3.8"
