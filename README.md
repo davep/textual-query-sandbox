@@ -6,13 +6,27 @@ testing [Textual queries](https://textual.textualize.io/guide/queries/).
 
 ## Installation
 
-Install either with `pip` or (ideally) `pipx`:
+### pipx
+
+The package can be installed using [`pipx`](https://pypa.github.io/pipx/):
 
 ```sh
 $ pipx install textual-query-sandbox
 ```
 
-Then run `tqs`. That's it!
+### Homebrew
+
+The package can be installed using Homebrew. Use the following commands to
+install:
+
+```sh
+$ brew tap davep/homebrew
+$ brew install textual-query-sandbox
+```
+
+## Running
+
+Once installed run the `tqs` command.
 
 ![Textual Query Sandbox](https://raw.githubusercontent.com/davep/textual-query-sandbox/main/tqs.png)
 
